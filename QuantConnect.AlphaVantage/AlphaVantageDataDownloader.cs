@@ -274,9 +274,6 @@ namespace QuantConnect.Lean.DataSource.AlphaVantage
 
             switch (response.ContentType)
             {
-                case "application/x-download":
-                    // Return correct data
-                    break;
                 case "application/json":
                     var jObject = JObject.Parse(response.Content);
 
@@ -297,9 +294,6 @@ namespace QuantConnect.Lean.DataSource.AlphaVantage
                         throw new Exception($"{nameof(AlphaVantageDataDownloader)}.{nameof(GetTimeSeries)}.Error Message: {errorMessage}");
                     }
                     throw new Exception($"{nameof(AlphaVantageDataDownloader)}.{nameof(GetTimeSeries)}.Unexpected JSON Response: {response.Content}");
-
-                default:
-                    throw new NotSupportedException($"{nameof(AlphaVantageDataDownloader)}.{nameof(GetTimeSeries)}: Unexpected content received from API.\n{response.Content}");
             }
 
             using (var reader = new StringReader(response.Content))
